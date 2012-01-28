@@ -55,7 +55,7 @@ describe('MongoStore', function () {
 
     it('should use mongo default if no settings are provided', function () {
       var store = new MongoStore({ auto_connect: false, db: testopts.db });
-      store.options.hostname.should.equal('localhost');
+      store.options.host.should.equal('localhost');
       store.options.port.should.equal(27017);
       store.options.auto_reconnect.should.be.true;
       store.server.should.be.instanceof(mongodb.Server);
