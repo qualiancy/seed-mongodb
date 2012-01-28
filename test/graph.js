@@ -25,7 +25,7 @@ describe('MongoStore being used in the GRAPH context', function () {
 
   var arthur = {
       id: 'arthur'
-    , name: 'Arthur dent'
+    , name: 'Arthur Dent'
     , stats: {
           origin: 'Earth'
         , species: 'human'
@@ -86,10 +86,56 @@ describe('MongoStore being used in the GRAPH context', function () {
     graph.pull(function (err) {
       should.not.exist(err);
       graph.count.should.equal(4);
-      var arthur2 = graph.get('/person/arthur');
+      var arthur2 = graph.get('/person/' + arthur.id);
       arthur2.get('name').should.equal(arthur.name);
       arthur2.flag('dirty').should.be.false;
       done()
+    });
+  });
+
+  it('should allow for all records of a specific type to be fetched', function (done) {
+    graph.fetch('person', function (err) {
+      should.not.exist(err);
+      graph.count.should.equal(2);
+
+      done();
+    });
+  });
+
+  it('should allow for a subset of existing objects to be selected', function (done) {
+    graph.fetch('person', { 'name': arthur.name }, function (err) {
+      should.not.exist(err);
+      graph.count.should.equal(1);
+
+      var arthur2 = graph.get('/person/' + arthur.id);
+      arthur2.get('name').should.equal(arthur.name);
+      arthur2.get('stats').should.be.a('object');
+      arthur2.flag('dirty').should.be.false;
+      done();
+    });
+  });
+
+  it('should allow for an already existing object to be updated', function (done) {
+    graph.fetch('person', function (err) {
+      should.not.exist(err);
+      graph.count.should.equal(2);
+
+      var arthur2 = graph.get('/person/' + arthur.id);
+      arthur2.flag('dirty').should.be.false;
+      arthur2.set({ 'name': 'The Traveler' });
+      arthur2.flag('dirty').should.be.true;
+
+      graph.push(function (err) {
+        should.not.exist(err);
+
+        var confirm = new Person({ id: 'arthur' });
+        confirm.store = store;
+        confirm.fetch(function (err) {
+          should.not.exist(err);
+          confirm.get('name').should.equal('The Traveler');
+          done();
+        });
+      });
     });
   });
 });
