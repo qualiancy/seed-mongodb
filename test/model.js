@@ -8,7 +8,7 @@ var testopts = {
     auto_connect: false
   , host: 'localhost'
   , port: 27017
-  , db: 'mongostore_test'
+  , db: 'mongostore_test_models'
 }
 
 describe('MongoStore being used in the MODEL context', function () {
