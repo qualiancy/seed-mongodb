@@ -1,0 +1,23 @@
+
+0.1.0 / 2012-01-28 
+==================
+
+  * update test to reflect change in host option storage
+  * README!
+  * changed option.hostname to option.host
+  * added seed as dev dep
+  * added travis config
+  * commenting!
+  * all tests passing
+  * #fetch is completed - must pass in mongdb valid query
+  * started graph tests
+  * model destroy tests + cleanup
+  * added #destroy
+  * longer test timeout as creating collections takes time
+  * get now functions + tests
+  * added #set w/ tests passing +
+  * first round of sync factoring
+  * handle connecting, disconnecting
+  * basic option parsing + tests
+  * getting things ready … tests/package/makefile
+  * project init

@@ -14,7 +14,7 @@ as it is not provided as `package.json` requirement.
 
 [Seed](http://github.com/qualiancy/seed), which stands for _storage-agnostic, event emitting datasets_, 
 is a library of components that provide a common API for working with data, no matter the source. 
-These compoents are Hash, Model, Graph, and Schema, MongoDB can be one the many sources used in 
+These compoents are Hash, Model, Graph, and Schema. MongoDB can be one the many sources used in 
 the construction eventful, data-centric applications.
 
 [Visit the Seed project page](http://github.com/qualiancy/seed) to learn more.
@@ -81,7 +81,7 @@ test database options are not provided by default.
 
 ## Getting Help
 
-All issues related to this project should be posted in [seed-redis GitHub Issues](https://github.com/logicalparadox/seed-redis/issues).
+All issues related to this project should be posted in [seed-mongodb GitHub Issues](https://github.com/qualiancy/seed-mongodb/issues).
 For all general seed related issues, please visit [seed's GitHub Issues](https://github.com/qualiancy/seed/issues).
 There is also a community forum is available at the [Seed Google Group](https://groups.google.com/group/seedjs-orm).
 
