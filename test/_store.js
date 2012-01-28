@@ -1,14 +1,21 @@
 var should = require('chai').should()
-  , Seed = require('seed');
+  , Seed = require('seed')
+  , mongodb = require('mongodb');
 
 var MongoStore = require('..');
+
+var testopts = {
+    host: 'localhost'
+  , port: 27017
+  , db: 'mongostore_test'
+}
 
 describe('MongoStore', function () {
   it('should have a version', function () {
     MongoStore.version.should.match(/^\d+\.\d+\.\d+$/);
   });
 
-  var store = new MongoStore({ auto_connect: false, db: 'noop' });
+  var store = new MongoStore({ auto_connect: false, db: testopts.db });
 
   it('should export an instance of Seed.Store', function () {
     store.should.be.instanceof(Seed.Store);
@@ -32,9 +39,8 @@ describe('MongoStore', function () {
   });
 
   describe('parsing options', function () {
-
     it('should only store the options when turning off autoConnect', function (done) {
-      var store = new MongoStore({ auto_connect: false, db: 'noop' });
+      var store = new MongoStore({ auto_connect: false, db: testopts.db });
       process.nextTick(function () {
         store.connectionState.should.equal(0);
         done();
@@ -48,10 +54,35 @@ describe('MongoStore', function () {
     });
 
     it('should use mongo default if no settings are provided', function () {
-      var store = new MongoStore({ auto_connect: false, db: 'noop' });
+      var store = new MongoStore({ auto_connect: false, db: testopts.db });
       store.options.hostname.should.equal('localhost');
       store.options.port.should.equal(27017);
       store.options.auto_reconnect.should.be.true;
+      store.server.should.be.instanceof(mongodb.Server);
+      store.db_connector.should.be.instanceof(mongodb.Db);
+    });
+  });
+
+  describe('connecting to mongodb', function () {
+    var opts = Seed.utils.merge({ auto_connect: false }, testopts)
+      , store = new MongoStore(opts);
+
+    it('should connect successfully', function (done) {
+      store._connect();
+      store.connectionState.should.equal(2);
+      store.on('connect', function () {
+        store.connectionState.should.equal(1);
+        done();
+      });
+    });
+
+    it('should disconnect successfully', function () {
+      store._close();
+      store.connectionState.should.not.equal(1);
+      store.on('disconnect', function () {
+        store.connectionState.should.equal(0);
+        done();
+      });
     });
   });
 });
