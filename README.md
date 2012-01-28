@@ -10,6 +10,15 @@ as it is not provided as `package.json` requirement.
 
       npm install seed seed-mongodb
 
+## What is Seed?
+
+[Seed](http://github.com/qualiancy/seed), which stands for _storage-agnostic, event emitting datasets_, 
+is a library of components that provide a common API for working with data, no matter the source. 
+These compoents are Hash, Model, Graph, and Schema, MongoDB can be one the many sources used in 
+the construction eventful, data-centric applications.
+
+[Visit the Seed project page](http://github.com/qualiancy/seed) to learn more.
+
 ## Usage
 
 This storage engine can be used for both models and collections. 
