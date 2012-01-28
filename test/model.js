@@ -25,6 +25,7 @@ describe('MongoStore being used in the MODEL context', function () {
 
   before(store.connect.bind(store));
   after(function (done) {
+    store.db.dropDatabase();
     store.close(done);
   });
 
@@ -57,6 +58,23 @@ describe('MongoStore being used in the MODEL context', function () {
       confirm.fetch(function (err) {
         should.not.exist(err);
         confirm.get('location').should.equal(arthur.get('location'));
+        done();
+      });
+    });
+  });
+
+  it('should allow for an already existing item to be removed', function (done) {
+    arthur.destroy(function (err) {
+      should.not.exist(err);
+
+      var confirm = new Person({
+        id: 'arthur'
+      });
+
+      confirm.fetch(function (err) {
+        should.exist(err);
+        err.should.be.instanceof(Seed.SeedError);
+        err.code.should.equal('ENOTFOUND');
         done();
       });
     });
