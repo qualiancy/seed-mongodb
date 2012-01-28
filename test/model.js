@@ -35,5 +35,31 @@ describe('MongoStore being used in the MODEL context', function () {
     });
   });
 
+  it('should allow an already writtin object to be retrieved', function (done) {
+    var dent = new Person({
+      id: 'arthur'
+    });
+
+    dent.fetch(function (err) {
+      should.not.exist(err);
+      dent.get('name').should.equal(arthur.get('name'));
+      done();
+    });
+  });
+
+  it('should allow an already written object to be modified', function (done) {
+    arthur.set({ location: 'earth' });
+    arthur.save(function (err) {
+      should.not.exist(err);
+      var confirm = new Person({
+          id: 'arthur'
+      });
+      confirm.fetch(function (err) {
+        should.not.exist(err);
+        confirm.get('location').should.equal(arthur.get('location'));
+        done();
+      });
+    });
+  });
 });
 
