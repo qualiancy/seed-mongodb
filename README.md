@@ -14,28 +14,30 @@ as it is not provided as `package.json` requirement.
 
 This storage engine can be used for both models and collections. 
 
-    var Seed = require('seed')
-      , MongoStore = require('seed-mongodb')
-      , store = new MongoStore({
-            db: 'hitchhikersguide'
-          , host: 'localhost'
-          , port: 27017
-        });
-
-    var Person = Seed.Model.extend('person', {
-      store: store
+```js
+var Seed = require('seed')
+  , MongoStore = require('seed-mongodb')
+  , store = new MongoStore({
+        db: 'hitchhikersguide'
+      , host: 'localhost'
+      , port: 27017
     });
 
-    var arthur = new Person({
-        id: 'arthur'
-      , name: 'Arthur Dent'
-      , occupation: 'Traveller'
-    });
+var Person = Seed.Model.extend('person', {
+  store: store
+});
 
-    arthur.save(function (err) {
-      if (err) return console.error(err);
-      console.log('Arthur has been saved!');
-    });
+var arthur = new Person({
+    id: 'arthur'
+  , name: 'Arthur Dent'
+  , occupation: 'Traveller'
+});
+
+arthur.save(function (err) {
+  if (err) return console.error(err);
+  console.log('Arthur has been saved!');
+});
+```
 
 ## Querying
 
@@ -44,17 +46,19 @@ follow MongoDB's form. For more information, check out [Mongo's Guide on Queryin
 and the awesome [node-mongo-native](https://github.com/christkv/node-mongodb-native) topic 
 on [queries](https://github.com/christkv/node-mongodb-native/blob/master/docs/queries.md).
 
-    var HitchhikersGuide = Seed.Graph.extend({
-        store: store
-      , initialize: function () {
-          this.define(Person);
-        }
-    });
+```js
+var HitchhikersGuide = Seed.Graph.extend({
+    store: store
+  , initialize: function () {
+      this.define(Person);
+    }
+});
 
-    var myGuide = new HitchhikersGuide();
-    myGuide.fetch('person', { 'name': 'Arthur Dent' }, function (err) {
-      var arthur = self.get('/person/arthur');
-    });
+var myGuide = new HitchhikersGuide();
+myGuide.fetch('person', { 'name': 'Arthur Dent' }, function (err) {
+  var arthur = self.get('/person/arthur');
+});
+```
 
 ## Tests
 
