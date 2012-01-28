@@ -81,8 +81,9 @@ test database options are not provided by default.
 
 ## Getting Help
 
-Please post issues to [GitHub Issues](https://github.com/logicalparadox/seed/issues).
-Community forum is available at the [Seed Google Group](https://groups.google.com/group/seedjs-orm).
+All issues related to this project should be posted in [seed-redis GitHub Issues](https://github.com/logicalparadox/seed-redis/issues).
+For all general seed related issues, please visit [seed's GitHub Issues](https://github.com/qualiancy/seed/issues).
+There is also a community forum is available at the [Seed Google Group](https://groups.google.com/group/seedjs-orm).
 
 ## Contributors
 
