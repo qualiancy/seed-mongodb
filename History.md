@@ -1,4 +1,13 @@
 
+0.2.0 / 2012-02-27 
+==================
+
+  * bencharks seed 0.2.0 compatible
+  * tests seed 0.2.0 compatible
+  * exports seed 0.2.0 compatible
+  * update dep
+  * benchmarks
+
 0.1.0 / 2012-01-28 
 ==================
 
