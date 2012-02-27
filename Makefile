@@ -9,7 +9,7 @@ test:
 		--timeout 10000 \
 		$(TESTS)
 
-benchmark:
+bench:
 	@NODE_ENV=benchmark ./node_modules/.bin/matcha \
 		$(BENCHMARKS)
 

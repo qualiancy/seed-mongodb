@@ -21,7 +21,7 @@ suite('CRUD Operations', function () {
   // takes a few seconds and would skew numbers
   before(function (done) {
     var first = new Rand();
-    first.set({ hello: 'world' });
+    first.set('hello', 'world');
     store.connect(function () {
       first.save(done);
     });
@@ -35,8 +35,9 @@ suite('CRUD Operations', function () {
   bench('create', function (next) {
     var uid = UID.gen()
       , model = new Rand({
-          id: uid
+          _id: uid
         });
+
     keystore.push(uid);
     model.save(function (ex) {
       if (ex) throw ex;
@@ -48,7 +49,7 @@ suite('CRUD Operations', function () {
   bench('read', function (next) {
     var uid = keystore[readpos]
       , model = new Rand({
-          id: uid
+          _id: uid
         });
     readpos++;
     model.fetch(function (ex) {
@@ -61,7 +62,7 @@ suite('CRUD Operations', function () {
   bench('update', function (next) {
     var uid = keystore[updatepos]
       , model = new Rand({
-            id: uid
+            _id: uid
           , hello: 'world'
         });
     updatepos++;
@@ -75,7 +76,7 @@ suite('CRUD Operations', function () {
   bench('destroy', function (next) {
     var uid = keystore[delpos]
       , model = new Rand({
-          id: uid
+          _id: uid
         });
     model.destroy(function (ex) {
       if (ex) throw ex;
