@@ -24,7 +24,7 @@ describe('MongoStore being used in the GRAPH context', function () {
   graph.define(Location);
 
   var arthur = {
-      id: 'arthur'
+      _id: 'arthur'
     , name: 'Arthur Dent'
     , stats: {
           origin: 'Earth'
@@ -33,7 +33,7 @@ describe('MongoStore being used in the GRAPH context', function () {
   };
 
   var ford = {
-      id: 'ford'
+      _id: 'ford'
     , name: 'Ford Prefect'
     , stats: {
           origin: 'Betelgeuse-ish'
@@ -42,12 +42,12 @@ describe('MongoStore being used in the GRAPH context', function () {
   };
 
   var earth = {
-      id: 'earth'
+      _id: 'earth'
     , name: 'Den\'s Planet Earth'
   };
 
   var ship = {
-      id: 'gold'
+      _id: 'gold'
     , name: 'Starship Heart of Gold'
   };
 
@@ -62,10 +62,10 @@ describe('MongoStore being used in the GRAPH context', function () {
   });
 
   it('should allow for new objects to be created', function (done) {
-    graph.set('/person/' + arthur.id, arthur);
-    graph.set('/person/' + ford.id, ford);
-    graph.set('/location/' + earth.id, earth);
-    graph.set('/location/' + ship.id, ship);
+    graph.set('person', arthur._id, arthur);
+    graph.set('person', ford._id, ford);
+    graph.set('location', earth._id, earth);
+    graph.set('location', ship._id, ship);
 
     graph.push(function (err) {
       should.not.exist(err);
@@ -78,15 +78,15 @@ describe('MongoStore being used in the GRAPH context', function () {
   });
 
   it('should allow for already existing objects to be read', function (done) {
-    graph.set('/person/' + arthur.id, arthur);
-    graph.set('/person/' + ford.id, ford);
-    graph.set('/location/' + earth.id, earth);
-    graph.set('/location/' + ship.id, ship);
+    graph.set('person', arthur._id, {});
+    graph.set('person', ford._id, {});
+    graph.set('location', earth._id, {});
+    graph.set('location', ship._id, {});
 
     graph.pull(function (err) {
       should.not.exist(err);
-      graph.count.should.equal(4);
-      var arthur2 = graph.get('/person/' + arthur.id);
+      graph.length.should.equal(4);
+      var arthur2 = graph.get('person', arthur._id);
       arthur2.get('name').should.equal(arthur.name);
       arthur2.flag('dirty').should.be.false;
       done()
@@ -96,7 +96,7 @@ describe('MongoStore being used in the GRAPH context', function () {
   it('should allow for all records of a specific type to be fetched', function (done) {
     graph.fetch('person', function (err) {
       should.not.exist(err);
-      graph.count.should.equal(2);
+      graph.length.should.equal(2);
 
       done();
     });
@@ -105,9 +105,9 @@ describe('MongoStore being used in the GRAPH context', function () {
   it('should allow for a subset of existing objects to be selected', function (done) {
     graph.fetch('person', { 'name': arthur.name }, function (err) {
       should.not.exist(err);
-      graph.count.should.equal(1);
+      graph.length.should.equal(1);
 
-      var arthur2 = graph.get('/person/' + arthur.id);
+      var arthur2 = graph.get('person', arthur._id);
       arthur2.get('name').should.equal(arthur.name);
       arthur2.get('stats').should.be.a('object');
       arthur2.flag('dirty').should.be.false;
@@ -118,17 +118,17 @@ describe('MongoStore being used in the GRAPH context', function () {
   it('should allow for an already existing object to be updated', function (done) {
     graph.fetch('person', function (err) {
       should.not.exist(err);
-      graph.count.should.equal(2);
+      graph.length.should.equal(2);
 
-      var arthur2 = graph.get('/person/' + arthur.id);
+      var arthur2 = graph.get('person', arthur._id);
       arthur2.flag('dirty').should.be.false;
-      arthur2.set({ 'name': 'The Traveler' });
+      arthur2.set('name', 'The Traveler');
       arthur2.flag('dirty').should.be.true;
 
       graph.push(function (err) {
         should.not.exist(err);
 
-        var confirm = new Person({ id: 'arthur' });
+        var confirm = new Person({ _id: 'arthur' });
         confirm.store = store;
         confirm.fetch(function (err) {
           should.not.exist(err);
