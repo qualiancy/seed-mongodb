@@ -1,4 +1,12 @@
 
+0.2.1 / 2012-03-09 
+==================
+
+  * graph tests comform to new _id standards
+  * model tests conform to new id rules
+  * refactor for proper id management
+  * added matcha dev dependancy for benchmaring
+
 0.2.0 / 2012-02-27 
 ==================
 
