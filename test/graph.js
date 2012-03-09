@@ -23,32 +23,28 @@ describe('MongoStore being used in the GRAPH context', function () {
   graph.define(Person);
   graph.define(Location);
 
-  var arthur = {
-      _id: 'arthur'
-    , name: 'Arthur Dent'
+  var arthur_raw = {
+      name: 'Arthur Dent'
     , stats: {
           origin: 'Earth'
         , species: 'human'
       }
   };
 
-  var ford = {
-      _id: 'ford'
-    , name: 'Ford Prefect'
+  var ford_raw = {
+      name: 'Ford Prefect'
     , stats: {
           origin: 'Betelgeuse-ish'
         , species: 'writer'
       }
   };
 
-  var earth = {
-      _id: 'earth'
-    , name: 'Den\'s Planet Earth'
+  var earth_raw = {
+    name: 'Den\'s Planet Earth'
   };
 
-  var ship = {
-      _id: 'gold'
-    , name: 'Starship Heart of Gold'
+  var ship_raw = {
+    name: 'Starship Heart of Gold'
   };
 
   before(store.connect.bind(store));
@@ -61,33 +57,43 @@ describe('MongoStore being used in the GRAPH context', function () {
     graph.flush();
   });
 
+
+  var arthur_id
+    , ford_id
+    , earth_id
+    , ship_id;
+
   it('should allow for new objects to be created', function (done) {
-    graph.set('person', arthur._id, arthur);
-    graph.set('person', ford._id, ford);
-    graph.set('location', earth._id, earth);
-    graph.set('location', ship._id, ship);
+    var arthur = graph.set('person', arthur_raw)
+      , ford = graph.set('person', ford_raw)
+      , earth = graph.set('location', earth_raw)
+      , ship = graph.set('location', ship_raw);
 
     graph.push(function (err) {
       should.not.exist(err);
       store.db.collections(function (err, cols) {
         should.not.exist(err);
         cols.length.should.be.above(1);
+        arthur_id = arthur.id;
+        ford_id = ford.id;
+        earth_id = earth.id;
+        ship_id = ship.id;
         done();
       });
     });
   });
 
   it('should allow for already existing objects to be read', function (done) {
-    graph.set('person', arthur._id, {});
-    graph.set('person', ford._id, {});
-    graph.set('location', earth._id, {});
-    graph.set('location', ship._id, {});
+    graph.set('person', arthur_id, {});
+    graph.set('person', ford_id, {});
+    graph.set('location', earth_id, {});
+    graph.set('location', ship_id, {});
 
     graph.pull(function (err) {
       should.not.exist(err);
       graph.length.should.equal(4);
-      var arthur2 = graph.get('person', arthur._id);
-      arthur2.get('name').should.equal(arthur.name);
+      var arthur2 = graph.get('person', arthur_id);
+      arthur2.get('name').should.equal(arthur_raw.name);
       arthur2.flag('dirty').should.be.false;
       done()
     });
@@ -97,18 +103,17 @@ describe('MongoStore being used in the GRAPH context', function () {
     graph.fetch('person', function (err) {
       should.not.exist(err);
       graph.length.should.equal(2);
-
       done();
     });
   });
 
   it('should allow for a subset of existing objects to be selected', function (done) {
-    graph.fetch('person', { 'name': arthur.name }, function (err) {
+    graph.fetch('person', { 'name': arthur_raw.name }, function (err) {
       should.not.exist(err);
       graph.length.should.equal(1);
 
-      var arthur2 = graph.get('person', arthur._id);
-      arthur2.get('name').should.equal(arthur.name);
+      var arthur2 = graph.get('person', arthur_id);
+      arthur2.get('name').should.equal(arthur_raw.name);
       arthur2.get('stats').should.be.a('object');
       arthur2.flag('dirty').should.be.false;
       done();
@@ -120,7 +125,7 @@ describe('MongoStore being used in the GRAPH context', function () {
       should.not.exist(err);
       graph.length.should.equal(2);
 
-      var arthur2 = graph.get('person', arthur._id);
+      var arthur2 = graph.get('person', arthur_id);
       arthur2.flag('dirty').should.be.false;
       arthur2.set('name', 'The Traveler');
       arthur2.flag('dirty').should.be.true;
@@ -128,7 +133,7 @@ describe('MongoStore being used in the GRAPH context', function () {
       graph.push(function (err) {
         should.not.exist(err);
 
-        var confirm = new Person({ _id: 'arthur' });
+        var confirm = new Person({ _id: arthur_id });
         confirm.store = store;
         confirm.fetch(function (err) {
           should.not.exist(err);
