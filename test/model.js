@@ -19,8 +19,7 @@ describe('MongoStore being used in the MODEL context', function () {
   });
 
   var arthur = new Person({
-      id: 'arthur'
-    , name: 'Arthur Dent'
+    name: 'Arthur Dent'
   });
 
   before(store.connect.bind(store));
@@ -29,8 +28,11 @@ describe('MongoStore being used in the MODEL context', function () {
     store.close(done);
   });
 
+
+  var id;
   it('should allow a new object to be created', function (done) {
     arthur.save(function (err) {
+      id = arthur.get('_id');
       should.not.exist(err);
       done();
     });
@@ -38,7 +40,7 @@ describe('MongoStore being used in the MODEL context', function () {
 
   it('should allow an already writtin object to be retrieved', function (done) {
     var dent = new Person({
-      id: 'arthur'
+      _id: id
     });
 
     dent.fetch(function (err) {
@@ -53,7 +55,7 @@ describe('MongoStore being used in the MODEL context', function () {
     arthur.save(function (err) {
       should.not.exist(err);
       var confirm = new Person({
-          id: 'arthur'
+          _id: id
       });
       confirm.fetch(function (err) {
         should.not.exist(err);
@@ -66,9 +68,8 @@ describe('MongoStore being used in the MODEL context', function () {
   it('should allow for an already existing item to be removed', function (done) {
     arthur.destroy(function (err) {
       should.not.exist(err);
-
       var confirm = new Person({
-        id: 'arthur'
+        _id: id
       });
 
       confirm.fetch(function (err) {
@@ -79,5 +80,6 @@ describe('MongoStore being used in the MODEL context', function () {
       });
     });
   });
+
 });
 
