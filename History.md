@@ -1,4 +1,10 @@
 
+0.2.2 / 2012-03-14 
+==================
+
+  * try/catch ObjectId conversion and pass back as rejection if error occurs
+  * don't travis 0.4.x
+
 0.2.1 / 2012-03-09 
 ==================
 
