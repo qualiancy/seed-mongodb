@@ -89,7 +89,7 @@ describe('MongoStore being used in the GRAPH context', function () {
     graph.set('location', earth_id, {});
     graph.set('location', ship_id, {});
 
-    graph.pull(function (err) {
+    graph.pull({ force: true }, function (err) {
       should.not.exist(err);
       graph.length.should.equal(4);
       var arthur2 = graph.get('person', arthur_id);
