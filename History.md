@@ -1,4 +1,14 @@
 
+0.3.0 / 2012-05-25 
+==================
+
+  * dev sep of seed v0.3.x
+  * tests passing
+  * refactor #set to abide by schemas
+  * clean up #sync
+  * traversal tests
+  * indentation
+
 0.2.5 / 2012-03-26 
 ==================
 
