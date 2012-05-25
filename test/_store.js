@@ -23,8 +23,6 @@ describe('MongoStore', function () {
 
   it('should have the proper seed required fields', function () {
     store.should.have.property('name', 'MongoStore');
-    store.should.have.property('MIN_SEED_VERSION')
-      .and.match(/^\d+\.\d+\.\d+$/);
   });
 
   it('should have the proper functions', function() {
