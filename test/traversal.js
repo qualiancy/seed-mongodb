@@ -6,7 +6,7 @@ var Seed = require('seed')
   , Model = Seed.Model
   , Graph = Seed.Graph;
 
-var Edge = require.resolve('seed/lib/seed/graph/edge/model');
+var Edge = require(require.resolve('seed/lib/seed/graph/edge/model'));
 
 var MongoStore = require('..')
   , mongodb = require('mongodb');
@@ -55,7 +55,7 @@ describe('Graph Traversal', function () {
   });
 
   after(function (done) {
-    //store.db.dropDatabase();
+    store.db.dropDatabase();
     store.close(done);
   });
 
