@@ -63,6 +63,13 @@ describe('MongoStore being used in the GRAPH context', function () {
     , earth_id
     , ship_id;
 
+  it('should not error when fetching on an empty db', function (done) {
+    graph.fetch('person', {}, function (err) {
+      should.not.exist(err);
+      done();
+    });
+  });
+
   it('should allow for new objects to be created', function (done) {
     var arthur = graph.set('person', arthur_raw)
       , ford = graph.set('person', ford_raw)
