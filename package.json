@@ -15,12 +15,12 @@
     "node": ">= 0.6.0"
   },
   "dependencies": {
-    "mongodb": "0.9.x"
+    "mongodb": "1.0.x"
   },
   "devDependencies": {
     "mocha": "*",
     "chai": "*",
-    "seed": "0.3.x",
+    "seed": "0.4.x",
     "matcha": "0.1.x"
   }
 }
