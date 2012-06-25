@@ -64,16 +64,18 @@ describe('Graph Traversal', function () {
       g.set(pond);
       g.set(williams);
 
-      g.relate(doctor, song, 'married');
-      g.relate(song, doctor, 'married');
-      g.relate(pond, williams, 'married');
-      g.relate(williams, pond, 'married');
-      g.relate(pond, doctor, 'companion');
-      g.relate(williams, pond, 'companion');
-
       g.push(function (err) {
-        if (err) throw err;
-        done();
+        g.relate(doctor, song, 'married');
+        g.relate(song, doctor, 'married');
+        g.relate(pond, williams, 'married');
+        g.relate(williams, pond, 'married');
+        g.relate(pond, doctor, 'companion');
+        g.relate(williams, pond, 'companion');
+
+        g.push(function (err) {
+          if (err) throw err;
+          done();
+        });
       });
     });
 
