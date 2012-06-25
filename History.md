@@ -1,4 +1,12 @@
 
+0.4.0 / 2012-06-25 
+==================
+
+  * update mongo dep to 1.0.x
+  * test bug fix for traversal object forcing id generation before push
+  * tests for nonexistent collections
+  * tests for model using schema
+
 0.3.0 / 2012-05-25 
 ==================
 
