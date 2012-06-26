@@ -53,11 +53,11 @@ describe('MongoStore', function () {
 
     it('should use mongo default if no settings are provided', function () {
       var store = new MongoStore({ auto_connect: false, db: testopts.db });
-      store.options.host.should.equal('localhost');
-      store.options.port.should.equal(27017);
-      store.options.auto_reconnect.should.be.true;
-      store.server.should.be.instanceof(mongodb.Server);
-      store.db_connector.should.be.instanceof(mongodb.Db);
+      store._opts.host.should.equal('localhost');
+      store._opts.port.should.equal(27017);
+      store._opts.auto_reconnect.should.be.true;
+      store._server.should.be.instanceof(mongodb.Server);
+      store._dbconn.should.be.instanceof(mongodb.Db);
     });
   });
 
@@ -66,7 +66,7 @@ describe('MongoStore', function () {
       , store = new MongoStore(opts);
 
     it('should connect successfully', function (done) {
-      store._connect();
+      store.connect();
       store.connectionState.should.equal(2);
       store.on('connect', function () {
         store.connectionState.should.equal(1);
@@ -75,7 +75,7 @@ describe('MongoStore', function () {
     });
 
     it('should disconnect successfully', function () {
-      store._close();
+      store.close();
       store.connectionState.should.not.equal(1);
       store.on('disconnect', function () {
         store.connectionState.should.equal(0);

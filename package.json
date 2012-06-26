@@ -15,7 +15,8 @@
     "node": ">= 0.6.0"
   },
   "dependencies": {
-    "mongodb": "1.0.x"
+      "dragonfly": "0.2.x"
+    , "mongodb": "1.0.x"
   },
   "devDependencies": {
     "mocha": "*",
