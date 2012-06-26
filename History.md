@@ -1,4 +1,12 @@
 
+0.5.0 / 2012-06-26 
+==================
+
+  * Merge branch 'refactor/errors'
+  * add dragonfly errors
+  * file restructure
+  * prepare tests for new internals
+
 0.4.0 / 2012-06-25 
 ==================
 
