@@ -49,7 +49,7 @@ describe('MongoStore being used in the GRAPH context', function () {
 
   before(store.connect.bind(store));
   after(function (done) {
-    store.db.dropDatabase();
+    store._db.dropDatabase();
     store.close(done);
   });
 
@@ -78,7 +78,7 @@ describe('MongoStore being used in the GRAPH context', function () {
 
     graph.push(function (err) {
       should.not.exist(err);
-      store.db.collections(function (err, cols) {
+      store._db.collections(function (err, cols) {
         should.not.exist(err);
         cols.length.should.be.above(1);
         arthur_id = arthur.id;

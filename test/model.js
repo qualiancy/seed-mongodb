@@ -27,7 +27,7 @@ describe('MongoStore being used in the MODEL context', function () {
 
   before(store.connect.bind(store));
   after(function (done) {
-    store.db.dropDatabase();
+    store._db.dropDatabase();
     store.close(done);
   });
 
@@ -120,7 +120,7 @@ describe('MongoStore in the MODEL context with a SCHEMA', function () {
 
   before(store.connect.bind(store));
   after(function (done) {
-    store.db.dropDatabase();
+    store._db.dropDatabase();
     store.close(done);
   });
 
