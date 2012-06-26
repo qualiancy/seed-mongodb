@@ -79,7 +79,7 @@ describe('MongoStore being used in the MODEL context', function () {
 
       confirm.fetch(function (err) {
         should.exist(err);
-        err.should.be.instanceof(Seed.SeedError);
+        err.name.should.equal('SeedError');
         err.code.should.equal('ENOTFOUND');
         done();
       });
@@ -172,7 +172,7 @@ describe('MongoStore in the MODEL context with a SCHEMA', function () {
 
       confirm.fetch(function (err) {
         should.exist(err);
-        err.should.be.instanceof(Seed.SeedError);
+        err.name.should.equal('SeedError');
         err.code.should.equal('ENOTFOUND');
         done();
       });
