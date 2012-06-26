@@ -1,1 +1,1 @@
-module.exports = require('./lib/mongostore.js');
+module.exports = require('./lib/store.js');
