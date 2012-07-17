@@ -1,4 +1,12 @@
 
+0.6.0 / 2012-07-17 
+==================
+
+  * Merge branch 'feature/replsets'
+  * add replica set tests (disabled by default)
+  * add replica set config errors
+  * add replicaset support to store initialize
+
 0.5.0 / 2012-06-26 
 ==================
 
