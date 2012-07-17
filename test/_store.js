@@ -37,6 +37,7 @@ describe('MongoStore', function () {
   });
 
   describe('parsing options', function () {
+
     it('should only store the options when turning off autoConnect', function (done) {
       var store = new MongoStore({ auto_connect: false, db: testopts.db });
       process.nextTick(function () {
@@ -59,6 +60,7 @@ describe('MongoStore', function () {
       store._server.should.be.instanceof(mongodb.Server);
       store._dbconn.should.be.instanceof(mongodb.Db);
     });
+
   });
 
   describe('connecting to mongodb', function () {
@@ -83,4 +85,39 @@ describe('MongoStore', function () {
       });
     });
   });
+
+  xdescribe('connecting to replicaset', function () {
+    var opts = {
+        servers: [
+            { host: '10.0.1.6', port: 27017 }
+          , { host: '10.0.1.6', port: 27018 }
+          , { host: '10.0.1.6', port: 27019 }
+        ]
+      , db: 'mongostore_test'
+      , rs_name: 'qualiancy1'
+      , auto_connect: false
+    }
+
+    var store = new MongoStore(opts);
+
+    it('should connect successfully', function (done) {
+      store.connect();
+      store.connectionState.should.equal(2);
+      store.on('connect', function () {
+        store.connectionState.should.equal(1);
+        done();
+      });
+    });
+
+    it('should disconnect successfully', function () {
+      store.close();
+      store.connectionState.should.not.equal(1);
+      store.on('disconnect', function () {
+        store.connectionState.should.equal(0);
+        done();
+      });
+    });
+
+  });
+
 });
