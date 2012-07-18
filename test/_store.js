@@ -86,7 +86,7 @@ describe('MongoStore', function () {
     });
   });
 
-  describe('connecting to replicaset', function () {
+  xdescribe('connecting to replicaset', function () {
     var ip = '11.0.1.10'
       , opts = {
         servers: [
