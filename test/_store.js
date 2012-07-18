@@ -86,12 +86,13 @@ describe('MongoStore', function () {
     });
   });
 
-  xdescribe('connecting to replicaset', function () {
-    var opts = {
+  describe('connecting to replicaset', function () {
+    var ip = '11.0.1.10'
+      , opts = {
         servers: [
-            { host: '10.0.1.6', port: 27017 }
-          , { host: '10.0.1.6', port: 27018 }
-          , { host: '10.0.1.6', port: 27019 }
+            { host: ip, port: 27017 }
+          , { host: ip, port: 27018 }
+          , { host: ip, port: 27019 }
         ]
       , db: 'mongostore_test'
       , rs_name: 'qualiancy1'
