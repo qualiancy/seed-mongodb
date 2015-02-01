@@ -17,11 +17,11 @@
   "dependencies": {
       "dragonfly": "0.2.x"
     , "mongodb": "1.0.x"
+    , "seed": "0.4.x"
   },
   "devDependencies": {
     "mocha": "*",
     "chai": "*",
-    "seed": "0.4.x",
     "matcha": "0.1.x"
   }
 }
